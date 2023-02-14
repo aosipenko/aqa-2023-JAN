@@ -31,9 +31,8 @@ public class MyFirstUnitTest {
         googlePage.setSearchValue("test");
         googlePage.performSearch();
 
-        Assertions.assertTrue(googlePage.getSearchHeaders().contains("test"));
-
-        rozetkaPage.loadPage();
+        Assertions.assertTrue(googlePage.getSearchHeaders()
+                .stream().anyMatch(header -> header.contains("test")));
     }
 
     @Test
