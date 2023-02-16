@@ -16,11 +16,11 @@ public class CucumberHooks implements EventListener {
     }
 
     private void setUpDriver(TestRunStarted event) {
-//        WebSteps.driver = new ChromeDriver();
+        WebSteps.driver = new ChromeDriver();
     }
 
     private void tearDown(TestRunFinished event) {
         System.out.println("All tests finished, shutting down...");
-//        WebSteps.driver.quit();
+        WebSteps.driver.quit();
     }
 }

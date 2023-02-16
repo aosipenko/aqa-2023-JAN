@@ -3,33 +3,21 @@ package org.prog.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.prog.dto.ResultsDto;
 import org.prog.dto.UserDto;
 import org.prog.pages.GooglePage;
 import org.prog.pages.RozetkaPage;
-
-import static org.hamcrest.Matchers.hasItems;
+import org.prog.pages.locators.GooglePageSelectors;
+import org.prog.util.DataHolder;
 
 public class WebSteps {
 
-    private final static String REQUEST =
-            "https://randomuser.me/api/?inc=gender,name,nat&noinfo&results=20";
 
     public static WebDriver driver;
     private GooglePage googlePage = new GooglePage(driver);
     private RozetkaPage rozetkaPage = new RozetkaPage(driver);
-
-    private UserDto randomUser;
-
-    @Given("I generate a random Person")
-    public void generateRandomUser() {
-        randomUser = getUserName();
-    }
 
     @Given("I load google page")
     public void openGooglePage() {
@@ -37,33 +25,43 @@ public class WebSteps {
         googlePage.acceptCookiesIfPresent();
     }
 
-    @When("I google for random Person")
-    public void searchForRandomPerson() {
-        String searchValue = randomUser.getName().getFirst() +
-                " " + randomUser.getName().getLast();
-        googlePage.setSearchValue(searchValue);
+    @When("I google for person {string}")
+    public void searchForRandomPerson(String alias) {
+        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        googlePage.setSearchValue(getUserName(userDto));
         googlePage.performSearch();
     }
 
-    @Then("I can see random Persons name in search results")
-    public void validateSearchResults() {
-        String searchValue = randomUser.getName().getFirst() +
-                " " + randomUser.getName().getLast();
+    @Then("I can see {string} name in search results")
+    public void validateSearchResults(String alias) {
+        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        String searchValue = getUserName(userDto);
         Assertions.assertTrue(googlePage.getSearchHeaders().stream()
                 .anyMatch(header -> header.contains(searchValue)));
     }
 
-    private UserDto getUserName() {
-        Response response = RestAssured.get(REQUEST);
-        ValidatableResponse validatableResponse = response.then();
+    @When("I set {} value to name of {string}")
+    public void searchForName(GooglePageSelectors gps, String alias) {
+        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        String searchValue = getUserName(userDto);
+        driver.findElement(gps.getLocator()).sendKeys(searchValue);
+    }
 
-        validatableResponse.assertThat()
-                .statusCode(200)
-                .body("results.gender", hasItems("male", "female"));
+    @When("I send key {} to {}")
+    public void clickButton(Keys keys, GooglePageSelectors gps) {
+        driver.findElement(gps.getLocator()).sendKeys(keys);
+    }
 
-        ResultsDto resultsDto = response.as(ResultsDto.class);
-        return resultsDto.getResults().stream()
-                .filter(userDto -> userDto.getGender().equals("male"))
-                .findFirst().get();
+    @Then("I see {string} name in {}")
+    public void checkSearchResults(String alias, GooglePageSelectors gps) {
+        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        String searchValue = getUserName(userDto);
+        Assertions.assertTrue(driver.findElements(gps.getLocator()).stream()
+                .anyMatch(webElement -> webElement.getText().contains(searchValue)));
+    }
+
+    private String getUserName(UserDto randomUser) {
+        return randomUser.getName().getFirst() +
+                " " + randomUser.getName().getLast();
     }
 }

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.prog.pages.locators.GooglePageSelectors;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,11 +27,13 @@ public class GooglePage extends AbstractPage {
 
     public void setSearchValue(String value) {
         clearSearchInput();
-        driver.findElement(By.name("q")).sendKeys(value);
+        driver.findElement(GooglePageSelectors.SEARCH.getLocator())
+                .sendKeys(value);
     }
 
     public void clearSearchInput() {
-        driver.findElement(By.name("q")).clear();
+        driver.findElement(GooglePageSelectors.SEARCH.getLocator())
+                .clear();
     }
 
     public void performSearch() {
