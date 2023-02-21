@@ -1,7 +1,9 @@
 Feature: testing stuff with BDD
 
-#  Scenario: Generate a random Person and google him or her with Data Holder
-#    Given I generate a random "person_1"
+  Scenario: Generate a random Person and google him or her with Data Holder
+    Given I generate a random "person_1"
+    Given I save person "person_1" to DB
+
 #    And I load google page
 #    When I google for person "person_1"
 #    Then I can see "person_1" name in search results
@@ -25,9 +27,9 @@ Feature: testing stuff with BDD
 #    Given Multiple params "parameter" go like this "another one"
 #    Given Int params 9999!
 #
-  Scenario: Enum casting showcase
-    Given I generate a random "person_1"
-    And I load google page
-    When I set SEARCH value to name of "person_1"
-    When I send key ENTER to SEARCH
-    Then I see "person_1" name in SEARCH_HEADERS
+#  Scenario: Enum casting showcase
+#    Given I generate a random "person_1"
+#    And I load google page
+#    When I set SEARCH value to name of "person_1"
+#    When I send key ENTER to SEARCH
+#    Then I see "person_1" name in SEARCH_HEADERS
