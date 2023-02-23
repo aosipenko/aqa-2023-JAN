@@ -12,22 +12,6 @@ import java.util.stream.Stream;
 
 public class ParametrizedTest {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @ParameterizedTest
     @MethodSource("provideStringsForIsBlank")
     public void testParams(String s) {
