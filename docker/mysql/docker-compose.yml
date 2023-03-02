@@ -1,6 +1,9 @@
 version: '3.3'
 services:
   db:
+    hostname: "mysql"
+    networks:
+      selenoid: null
     image: mysql:5.7
     restart: always
     environment:

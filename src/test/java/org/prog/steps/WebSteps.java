@@ -13,8 +13,6 @@ import org.prog.pages.locators.GooglePageSelectors;
 import org.prog.util.DataHolder;
 
 public class WebSteps {
-
-
     public static WebDriver driver;
     private GooglePage googlePage = new GooglePage(driver);
     private RozetkaPage rozetkaPage = new RozetkaPage(driver);
