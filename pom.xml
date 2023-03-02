@@ -88,6 +88,12 @@
             <version>2.19.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>6.12.0</version>
+        </dependency>
     </dependencies>
 
     <build>

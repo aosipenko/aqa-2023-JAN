@@ -1,4 +1,7 @@
-# BEFORE YOU START: docker network create selenoid
+# BEFORE YOU START:
+#  docker network create selenoid
+#  docker pull selenoid/chrome:latest
+#  docker pull selenoid/video-recorder:latest-release
 version: '3'
 networks:
   selenoid:
