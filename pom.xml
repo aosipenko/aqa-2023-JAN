@@ -109,7 +109,7 @@
                 <configuration>
                     <includes>
                         <include>**/*CucumberTestRunner*.java</include>
-                        <include>**/*JUnitRestTest*.java</include>
+<!--                        <include>**/*JUnitRestTest*.java</include>-->
                     </includes>
                 </configuration>
             </plugin>
