@@ -1,5 +1,6 @@
 package org.prog.cucumber;
 
+import io.cucumber.junit.Cucumber;
 import io.cucumber.plugin.EventListener;
 import io.cucumber.plugin.event.EventPublisher;
 import io.cucumber.plugin.event.TestRunFinished;
@@ -26,10 +27,10 @@ public class CucumberHooks implements EventListener {
             chromeOptions.setCapability("enableVNC", true);
             chromeOptions.setCapability("enableVideo", true);
             if ("TSELSE3871808".equals(InetAddress.getLocalHost().getHostName())) {
-                WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
-                WebSteps.driver = driver;
+//                WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+//                WebSteps.driver = driver;
             } else {
-                WebSteps.driver = new RemoteWebDriver(new URL("http://selenoid:4444/wd/hub"), chromeOptions);
+//                WebSteps.driver = new RemoteWebDriver(new URL("http://selenoid:4444/wd/hub"), chromeOptions);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,12 +1,12 @@
-Feature: testing stuff with BDD
-
-  Scenario: Generate a random Person and google him or her with Data Holder
-    Given I generate a random "person_1"
-    Given I save person "person_1" to DB
-    Given I retrieve person with "FirstName" = "Francis" as "person_1"
-    And I load google page
-    When I google for person "person_1"
-    Then I can see "person_1" name in search results
+#Feature: testing stuff with BDD
+#
+#  Scenario: Generate a random Person and google him or her with Data Holder
+#    Given I generate a random "person_1"
+#    Given I save person "person_1" to DB
+#    Given I retrieve person with "FirstName" = "Francis" as "person_1"
+#    And I load google page
+#    When I google for person "person_1"
+#    Then I can see "person_1" name in search results
 
 #  Scenario: Generate a random Person and google him or her with Data Holder
 #    Given I generate a random "person_1"

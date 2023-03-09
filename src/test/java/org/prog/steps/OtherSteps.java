@@ -1,6 +1,8 @@
 package org.prog.steps;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class OtherSteps {
 
@@ -18,5 +20,20 @@ public class OtherSteps {
     @Given("Int params {int}!")
     public void intParamsTest(int input) {
         System.out.println("this is int!" + input);
+    }
+
+    @Given("a parallel given")
+    public void aParallelGiven() {
+        System.out.println(Thread.currentThread().getId());
+    }
+
+    @When("a parallel when")
+    public void aParallelWhen() {
+        System.out.println(Thread.currentThread().getId());
+    }
+
+    @Then("a parallel then")
+    public void aParallelThen() {
+        System.out.println(Thread.currentThread().getId());
     }
 }
