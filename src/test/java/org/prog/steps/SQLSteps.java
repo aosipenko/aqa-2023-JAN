@@ -2,10 +2,10 @@ package org.prog.steps;
 
 import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
-import org.junit.Assert;
 import org.prog.dto.NameDto;
 import org.prog.dto.UserDto;
 import org.prog.util.DataHolder;
+import org.testng.Assert;
 
 import java.net.InetAddress;
 import java.sql.*;

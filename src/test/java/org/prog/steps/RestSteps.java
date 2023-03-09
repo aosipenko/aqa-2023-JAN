@@ -6,10 +6,10 @@ import io.cucumber.java.en.Then;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import org.junit.Assert;
 import org.prog.dto.ResultsDto;
 import org.prog.dto.UserDto;
 import org.prog.util.DataHolder;
+import org.testng.Assert;
 
 public class RestSteps {
 

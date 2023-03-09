@@ -3,15 +3,14 @@ package org.prog;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.prog.dto.ResultsDto;
 import org.prog.dto.UserDto;
 import org.prog.pages.GooglePage;
 import org.prog.pages.RozetkaPage;
-
-import java.util.Random;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 import static org.hamcrest.Matchers.hasItems;
 
@@ -23,14 +22,14 @@ public class MyFirstUnitTest {
     private final static String REQUEST =
             "https://randomuser.me/api/?inc=gender,name,nat&noinfo&results=20";
 
-    @BeforeAll
+    @BeforeClass
     public static void setUp() {
         WebDriver driver = new ChromeDriver();
         googlePage = new GooglePage(driver);
         rozetkaPage = new RozetkaPage(driver);
     }
 
-    @BeforeEach
+    @BeforeTest
     public void loadPage() {
         googlePage.loadPage();
         googlePage.acceptCookiesIfPresent();
@@ -43,7 +42,7 @@ public class MyFirstUnitTest {
         googlePage.setSearchValue("test");
         googlePage.performSearch();
 
-        Assertions.assertTrue(googlePage.getSearchHeaders()
+        Assert.assertTrue(googlePage.getSearchHeaders()
                 .stream().anyMatch(header -> header.contains("test")));
     }
 
@@ -54,7 +53,7 @@ public class MyFirstUnitTest {
         googlePage.setSearchValue("test");
         googlePage.feelingLuckySearch();
 
-        Assertions.assertTrue(googlePage.getCurrentUrl().equals("https://www.speedtest.net/"));
+        Assert.assertTrue(googlePage.getCurrentUrl().equals("https://www.speedtest.net/"));
     }
 
     @Test
@@ -64,7 +63,7 @@ public class MyFirstUnitTest {
         rozetkaPage.loadPage();
         rozetkaPage.openCatalog();
         rozetkaPage.selectMainCatalogOption("Ноутбуки та комп’ютери");
-        Assertions.assertTrue(rozetkaPage.waitForPageUrl(expectedUrl));
+        Assert.assertTrue(rozetkaPage.waitForPageUrl(expectedUrl));
     }
 
     @Test
@@ -73,16 +72,16 @@ public class MyFirstUnitTest {
         googlePage.setSearchValue(searchName);
         googlePage.performSearch();
 
-        Assertions.assertTrue(googlePage.getSearchHeaders()
+        Assert.assertTrue(googlePage.getSearchHeaders()
                 .stream().anyMatch(header -> header.contains(searchName)));
     }
 
-    @AfterEach
+    @AfterTest
     public void wrapUp() {
         System.out.println("======================================");
     }
 
-    @AfterAll
+    @AfterClass
     public static void tearDown() {
         googlePage.quiteDriver();
     }

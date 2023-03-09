@@ -3,7 +3,6 @@ package org.prog.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.prog.dto.UserDto;
@@ -11,6 +10,7 @@ import org.prog.pages.GooglePage;
 import org.prog.pages.RozetkaPage;
 import org.prog.pages.locators.GooglePageSelectors;
 import org.prog.util.DataHolder;
+import org.testng.Assert;
 
 public class WebSteps {
     public static WebDriver driver;
@@ -34,7 +34,7 @@ public class WebSteps {
     public void validateSearchResults(String alias) {
         UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
         String searchValue = getUserName(userDto);
-        Assertions.assertTrue(googlePage.getSearchHeaders().stream()
+        Assert.assertTrue(googlePage.getSearchHeaders().stream()
                 .anyMatch(header -> header.contains(searchValue)));
     }
 
@@ -54,7 +54,7 @@ public class WebSteps {
     public void checkSearchResults(String alias, GooglePageSelectors gps) {
         UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
         String searchValue = getUserName(userDto);
-        Assertions.assertTrue(driver.findElements(gps.getLocator()).stream()
+        Assert.assertTrue(driver.findElements(gps.getLocator()).stream()
                 .anyMatch(webElement -> webElement.getText().contains(searchValue)));
     }
 
