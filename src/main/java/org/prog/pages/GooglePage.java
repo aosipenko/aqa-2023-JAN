@@ -55,8 +55,4 @@ public class GooglePage extends AbstractPage {
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
-
-    public void smth() {
-
-    }
 }
