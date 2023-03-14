@@ -11,9 +11,13 @@ import org.prog.pages.GooglePage;
 import org.prog.pages.RozetkaPage;
 import org.prog.pages.locators.GooglePageSelectors;
 import org.prog.util.DataHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class WebSteps {
     public static WebDriver driver;
+
+    @Autowired
+    private DataHolder dataHolder;
     private GooglePage googlePage = new GooglePage(driver);
     private RozetkaPage rozetkaPage = new RozetkaPage(driver);
 
@@ -25,14 +29,14 @@ public class WebSteps {
 
     @When("I google for person {string}")
     public void searchForRandomPerson(String alias) {
-        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        UserDto userDto = (UserDto) dataHolder.get(alias);
         googlePage.setSearchValue(getUserName(userDto));
         googlePage.performSearch();
     }
 
     @Then("I can see {string} name in search results")
     public void validateSearchResults(String alias) {
-        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        UserDto userDto = (UserDto) dataHolder.get(alias);
         String searchValue = getUserName(userDto);
         Assertions.assertTrue(googlePage.getSearchHeaders().stream()
                 .anyMatch(header -> header.contains(searchValue)));
@@ -40,7 +44,7 @@ public class WebSteps {
 
     @When("I set {} value to name of {string}")
     public void searchForName(GooglePageSelectors gps, String alias) {
-        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        UserDto userDto = (UserDto) dataHolder.get(alias);
         String searchValue = getUserName(userDto);
         driver.findElement(gps.getLocator()).sendKeys(searchValue);
     }
@@ -52,7 +56,7 @@ public class WebSteps {
 
     @Then("I see {string} name in {}")
     public void checkSearchResults(String alias, GooglePageSelectors gps) {
-        UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+        UserDto userDto = (UserDto) dataHolder.get(alias);
         String searchValue = getUserName(userDto);
         Assertions.assertTrue(driver.findElements(gps.getLocator()).stream()
                 .anyMatch(webElement -> webElement.getText().contains(searchValue)));

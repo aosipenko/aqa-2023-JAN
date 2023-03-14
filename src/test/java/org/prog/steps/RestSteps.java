@@ -10,20 +10,23 @@ import org.junit.Assert;
 import org.prog.dto.ResultsDto;
 import org.prog.dto.UserDto;
 import org.prog.util.DataHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RestSteps {
 
+  @Autowired
+  private DataHolder dataHolder;
   private final static String REQUEST =
       "https://randomuser.me/api/?inc=gender,name,nat&noinfo&results=20";
 
   @Given("I generate a random {string}")
   public void generateRandomUser(String alias) {
-    DataHolder.getInstance().put(alias, getUserName());
+    dataHolder.put(alias, getUserName());
   }
 
   @Then("Person {string} has gender {string}")
   public void guessGender(String alias, String gender) {
-    UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+    UserDto userDto = (UserDto) dataHolder.get(alias);
     Assert.assertEquals(gender, userDto.getGender());
   }
 

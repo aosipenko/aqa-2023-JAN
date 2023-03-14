@@ -3,9 +3,13 @@ package org.prog.steps;
 import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
 import org.junit.Assert;
+import org.prog.db.Persons;
+import org.prog.db.PersonsJpa;
 import org.prog.dto.NameDto;
 import org.prog.dto.UserDto;
 import org.prog.util.DataHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.InetAddress;
 import java.sql.*;
@@ -23,10 +27,36 @@ public class SQLSteps {
             "insert into Persons (LastName, FirstName, Title, Gender)" +
                     " VALUES ('%s', '%s', '%s', '%s')";
 
+    @Autowired
+    private PersonsJpa personsJpa;
+
+    @Autowired
+    private DataHolder dataHolder;
+
+    @Given("I count persons using Spring Data")
+    public void countPersonsWithSpring() {
+        System.out.println(personsJpa.findAll().size());
+    }
+
+    @Given("I generate and save Person")
+    @Transactional
+    public void generateAndSave() {
+        try {
+            Persons p = new Persons();
+            p.setFirstName("Alice");
+            p.setLastName("Cooper");
+            p.setGender("male");
+            p.setTitle("Mr");
+            personsJpa.save(p);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @Given("I save person {string} to DB")
     public void savePersonToDB(String alias) {
         try {
-            UserDto userDto = (UserDto) DataHolder.getInstance().get(alias);
+            UserDto userDto = (UserDto) dataHolder.get(alias);
 
             String query = String.format(NEW_USER_SQL, userDto.getName().getLast(), userDto.getName().getFirst(),
                     userDto.getName().getTitle(), userDto.getGender());
@@ -89,7 +119,7 @@ public class SQLSteps {
                 userDto.getName().setFirst(sqlResults.get().getString(1));
                 userDto.getName().setLast(sqlResults.get().getString(2));
             }
-            DataHolder.getInstance().put(alias, userDto);
+            dataHolder.put(alias, userDto);
         } else {
             Assert.fail("SQL Execution failed!");
         }
