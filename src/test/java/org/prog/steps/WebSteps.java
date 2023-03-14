@@ -10,9 +10,11 @@ import org.prog.pages.locators.GooglePageSelectors;
 import org.prog.util.DataHolder;
 import org.testng.Assert;
 
+import java.util.Queue;
+
 public class WebSteps {
-    private GooglePage googlePage = WebPageFactory.getPage(DriverName.CHROME, Pages.GOOGLE, GooglePage.class);
-    private RozetkaPage rozetkaPage = WebPageFactory.getPage(DriverName.CHROME, Pages.ROZETKA, RozetkaPage.class);
+    private GooglePage googlePage = WebPageFactory.getPage(DriverName.CHROME, Pages.GOOGLE);
+    private RozetkaPage rozetkaPage = WebPageFactory.getPage(DriverName.CHROME, Pages.ROZETKA);
 
     @Given("I load google page")
     public void openGooglePage() {
